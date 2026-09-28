@@ -1,0 +1,7 @@
+410|Programación en Python|3
+260|Algoritmos y estructuras|2
+580|Bases de datos|1
+190|Matemática discreta|4
+330|Análisis de datos|2
+490|Redes de computadoras|3
+670|Inteligencia artificial|1

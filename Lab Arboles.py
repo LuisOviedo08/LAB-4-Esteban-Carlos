@@ -109,4 +109,18 @@ def procesar_movimientos(raiz, ruta):
 
 #Crear main para probar las funciones
 def main():
-    #... Aqui puede agregar codigo para probar las funciones definidas arriba
+    #Prueba provicional de las funciones
+    raiz = cargar_catalogo('catalogo_libros.txt')
+    print(listado_inorden(raiz))
+    print(buscar(raiz, 330).titulo)
+    print(prestar(raiz, 330))
+    print(devolver(raiz, 580))
+    print(total_disponibles(raiz))
+    print(bajo_inventario(raiz))
+
+    raiz = cargar_catalogo('catalogo_libros.txt')
+    print(procesar_movimientos(raiz, 'movimientos.txt'))
+
+
+if __name__ == "__main__":
+    main()
