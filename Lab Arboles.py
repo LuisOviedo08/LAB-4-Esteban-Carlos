@@ -107,19 +107,6 @@ def procesar_movimientos(raiz, ruta):
                 rechazados += 1
     return aceptados, rechazados
 
-def main():
-    #Prueba provicional de las funciones
-    raiz = cargar_catalogo('catalogo_libros.txt')
-    print(listado_inorden(raiz))
-    print(buscar(raiz, 330).titulo)
-    print(prestar(raiz, 330))
-    print(devolver(raiz, 580))
-    print(total_disponibles(raiz))
-    print(bajo_inventario(raiz))
-
-    raiz = cargar_catalogo('catalogo_libros.txt')
-    print(procesar_movimientos(raiz, 'movimientos.txt'))
-
 
 def main():
     print('PASO 0: COMPROBAR LOS ARCHIVOS')
