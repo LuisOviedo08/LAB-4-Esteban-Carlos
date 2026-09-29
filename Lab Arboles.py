@@ -107,7 +107,6 @@ def procesar_movimientos(raiz, ruta):
                 rechazados += 1
     return aceptados, rechazados
 
-#Crear main para probar las funciones
 def main():
     #Prueba provicional de las funciones
     raiz = cargar_catalogo('catalogo_libros.txt')
@@ -122,5 +121,74 @@ def main():
     print(procesar_movimientos(raiz, 'movimientos.txt'))
 
 
-if __name__ == "__main__":
+def main():
+    print('PASO 0: COMPROBAR LOS ARCHIVOS')
+    with open('catalogo_libros.txt', encoding='utf-8') as archivo:
+        print('Primer libro:', archivo.readline().strip())
+    with open('movimientos.txt', encoding='utf-8') as archivo:
+        print('Primer movimiento:', archivo.readline().strip())
+
+    print('\nPASO 1: CONSTRUIR EL ARBOL')
+    raiz = cargar_catalogo('catalogo_libros.txt')
+    print('Raiz:', raiz.codigo)
+    print('Hijos de 260:', raiz.izquierdo.izquierdo.codigo,
+          raiz.izquierdo.derecho.codigo)
+    print('Hijos de 580:', raiz.derecho.izquierdo.codigo,
+          raiz.derecho.derecho.codigo)
+
+    print('\nPASO 2: CONSULTAR EL CATALOGO')
+    print('Libro 330:', buscar(raiz, 330).titulo)
+    print('Codigo 999 registrado:', buscar(raiz, 999) is not None)
+    for libro in listado_inorden(raiz):
+        print(libro)
+
+    print('\nPASO 3: PRESTAMOS')
+    print('Primer prestamo de 330:', prestar(raiz, 330))
+    print('Segundo prestamo de 330:', prestar(raiz, 330))
+    print('Tercer prestamo de 330:', prestar(raiz, 330))
+    print('Prestamo de 999:', prestar(raiz, 999))
+    print('Disponibles de 330:', buscar(raiz, 330).disponibles)
+
+    print('\nPASO 4: DEVOLUCIONES')
+    print('Devolucion de 580:', devolver(raiz, 580))
+    print('Devolucion de 999:', devolver(raiz, 999))
+    print('Disponibles de 580:', buscar(raiz, 580).disponibles)
+
+    print('\nPASO 5: REPORTE DE EXISTENCIAS')
+    for libro in listado_inorden(raiz):
+        print(libro)
+    print('Ejemplares disponibles:', total_disponibles(raiz))
+    print('Codigos de bajo inventario:', bajo_inventario(raiz))
+
+    print('\nPASO 6: INGRESAR EL LIBRO 520')
+    raiz = insertar(raiz, 520, 'Seguridad informatica', 2)
+    print('Ruta: 410 -> 580 -> 490 -> 520 (hijo derecho de 490)')
+    print([codigo for codigo, _, _ in listado_inorden(raiz)])
+    print('Ejemplares disponibles:', total_disponibles(raiz))
+
+    print('\nPASO 7: PROCESAR MOVIMIENTOS EN OTRO ARBOL')
+    # Volver a leer el archivo evita mezclar el lote con las pruebas manuales.
+    raiz_lote = cargar_catalogo('catalogo_libros.txt')
+    aceptados, rechazados = procesar_movimientos(raiz_lote, 'movimientos.txt')
+    print('Aceptados:', aceptados, 'Rechazados:', rechazados)
+    print('Existencias:', total_disponibles(raiz_lote))
+    print('Bajo inventario:', bajo_inventario(raiz_lote))
+    for libro in listado_inorden(raiz_lote):
+        print(libro)
+
+    print('\nPRUEBA 1: ARBOL VACIO')
+    print('buscar(None, 410):', buscar(None, 410))
+    print('listado_inorden(None):', listado_inorden(None))
+    print('total_disponibles(None):', total_disponibles(None))
+    print('bajo_inventario(None):', bajo_inventario(None))
+
+    print('\nPRUEBA 2: CODIGO DUPLICADO')
+    try:
+        raiz = insertar(raiz, 520, 'Otro libro', 1)
+    except ValueError as error:
+        print(error)
+    print('Total despues del intento duplicado:', total_disponibles(raiz))
+
+
+if __name__ == '__main__':
     main()
